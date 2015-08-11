@@ -7,7 +7,6 @@ tags:[python,django]
 ---
 {% include JB/setup %}
 #在使用github page搭建个人blog
----
 ***当你看到这篇的时候，假定你已经会在github上创建库和git的原理及基本的使用了。
 **搭建环境
 1、github帐号
@@ -41,7 +40,7 @@ $ git checkout --orphan gh-pages
 
 ```
 $ touch  _config.yml
-$ echo "baseul: /blog_demo"
+$ echo "baseul: /blog_demo" >> _config.yml
 ```
 **第三步，创建模板文件。
 在项目根目录下，创建一个_layouts目录，用于存放模板文件。
