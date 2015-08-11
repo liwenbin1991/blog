@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: page
 title: 在使用github page搭建个人blog
 category: python_django
 tagline: "Supporting tagline"
