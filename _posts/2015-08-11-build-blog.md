@@ -9,10 +9,14 @@ tags : [python, django]
 #在使用github page搭建个人blog
 ---
 **当你看到这篇的时候，假定你已经会在github上创建库和git的原理及基本的使用了。**
+
 **搭建环境**
+
 1. github帐号
 2. 安装git
+
 **开始搭建**
+
 1. 创建项目
 在你的本机上，建立一个目录，作为项目的主目录。假定为blog_demo.
 ```
@@ -34,7 +38,9 @@ tags : [python, django]
  $ touch  _config.yml
  $ echo "baseul: /blog_demo" >> _config.yml
 ```
+
 **第三步，创建模板文件。**
+
 在项目根目录下，创建一个_layouts目录，用于存放模板文件。
 ```
  $ mkdir _layouts
@@ -53,7 +59,9 @@ tags : [python, django]
  </html>
 ```
 Jekyll使用Liquid模板语言，{{ page.title }}表示文章标题，{{ content }}表示文章内容，更多模板变量请参考官方文档。
+
 **第四步，创建文章。**
+
 回到项目根目录
 ```
  $ cd ../
@@ -77,7 +85,9 @@ Jekyll使用Liquid模板语言，{{ page.title }}表示文章标题，{{ content
 ```
 每篇文章的头部，必须有一个yaml文件头，用来设置一些元数据。它用三根短划线"---"，标记开始和结束，里面每一行设置一种元数据。"layout:default"，表示该文章的模板使用_layouts目录下的default.html文件；"title: 你好，世界"，表示该文章的标题是"你好，世界"，如果不设置这个值，默认使用嵌入文件名的标题，即"hello world"。
 在yaml文件头后面，就是文章的正式内容，里面可以使用模板变量。{{ page.title }}就是文件头中设置的"你好，世界"，{{ page.date }}则是嵌入文件名的日期（也可以在文件头重新定义date变量），"| date_to_string"表示将page.date变量转化成人类可读的格式。
+
 **第五步，创建首页。**
+
 有了文章以后，还需要有一个首页。
 回到根目录，创建一个index.html文件，填入以下内容。
 ```
@@ -96,7 +106,9 @@ Jekyll使用Liquid模板语言，{{ page.title }}表示文章标题，{{ content
  </ul>
 ```
 它的Yaml文件头表示，首页使用default模板，标题为"我的Blog"。然后，首页使用了{% for post in site.posts %}，表示对所有帖子进行一个遍历。这里要注意的是，Liquid模版  语言规定，输出内容使用两层大括号，单纯的命令使用一层大括号。至于{{site.baseurl}}就是_config.yml中设置的baseurl变量。
+
 **第六步，发布内容。**
+
 现在，这个简单的Blog就可以发布了。先把所有内容加入本地git库。
 ```
  $ git add .
