@@ -20,7 +20,7 @@ tags : [python, django]
 1. 创建项目
 在你的本机上，建立一个目录，作为项目的主目录。假定为blog_demo.
 
-    $ mkdir blog_demo `sdf`
+    $ mkdir blog_demo 
 
 2. 对该目录进行git初始化
 ```
@@ -28,9 +28,7 @@ tags : [python, django]
  $ git init
 ```
 3. 创建一个没有父节点的 gh-pages。因为 github 规定，只有该分支中的页面才会生成网页文件
-```
- $ git checkout --orphan gh-pages
-```
+```$ git checkout --orphan gh-pages```
 以下所有动作，都在该分支下完成
 
 **第二步，创建设置文件**
