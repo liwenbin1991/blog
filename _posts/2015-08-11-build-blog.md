@@ -19,9 +19,9 @@ tags : [python, django]
 
 1. 创建项目
 在你的本机上，建立一个目录，作为项目的主目录。假定为blog_demo.
-```
- $ mkdir blog_demo
-```
+
+> $ mkdir blog_demo
+
 2. 对该目录进行git初始化
 ```
  $ cd blog_demo
@@ -32,13 +32,14 @@ tags : [python, django]
  $ git checkout --orphan gh-pages
 ```
 以下所有动作，都在该分支下完成
+
 **第二步，创建设置文件**
+
 在项目根目录下，建立一个名为_config.yml的文本文件。它是jekyll的设置文件，我们在里面填入如下内容，其他设置都可以用默认选项，具体解释参见官方网页。
 ```
  $ touch  _config.yml
  $ echo "baseul: /blog_demo" >> _config.yml
 ```
-
 **第三步，创建模板文件。**
 
 在项目根目录下，创建一个_layouts目录，用于存放模板文件。
