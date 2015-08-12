@@ -20,7 +20,7 @@ tags : [python, django]
 1. 创建项目
 在你的本机上，建立一个目录，作为项目的主目录。假定为blog_demo.
 
-    $ mkdir blog_demo 
+```$ mkdir blog_demo```
 
 2. 对该目录进行git初始化
 ```
