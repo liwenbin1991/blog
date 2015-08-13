@@ -1,0 +1,118 @@
+<p>{% include JB/setup %}</p>
+
+<h1 id='github_pageblog'>使用github page搭建个人blog</h1>
+
+<p><strong>当你看到这篇的时候，假定你已经会在github上创建库和git的原理及基本的使用了。</strong></p>
+
+<p><strong>搭建环境</strong></p>
+
+<ol>
+<li>github帐号</li>
+
+<li>安装git</li>
+</ol>
+
+<p><strong>开始搭建</strong></p>
+
+<p>1. 创建项目 在你的本机上，建立一个目录，作为项目的主目录。假定为blog_demo.</p>
+
+<pre><code>`$ mkdir blog_demo`</code></pre>
+
+<ol>
+<li>
+<p>对该目录进行git初始化</p>
+
+<p>$ cd blog_demo $ git init</p>
+</li>
+
+<li>
+<p>创建一个没有父节点的 gh-pages。因为 github 规定，只有该分支中的页面才会生成网页文件</p>
+
+<p>$ git checkout &#8211;orphan gh-pages</p>
+</li>
+</ol>
+
+<p>以下所有动作，都在该分支下完成</p>
+
+<p><strong>第二步，创建设置文件</strong></p>
+
+<p>在项目根目录下，建立一个名为_config.yml的文本文件。它是jekyll的设置文件，我们在里面填入如下内容，其他设置都可以用默认选项，具体解释参见官方网页。</p>
+
+<pre><code>$ touch  _config.yml
+$ echo &quot;baseul: /blog_demo&quot; &gt;&gt; _config.yml</code></pre>
+
+<p><strong>第三步，创建模板文件。</strong></p>
+
+<p>在项目根目录下，创建一个_layouts目录，用于存放模板文件。</p>
+
+<pre><code>$ mkdir _layouts</code></pre>
+
+<p>进入该目录，创建一个default.html文件，作为Blog的默认模板。并在该文件中填入以下内容。</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;</code></pre>
+
+<p>　 <meta content='text/html; charset=utf-8' http-equiv='content-type' /> 　 <title>{{ page.title }}</title> &lt;/head&gt; <body>
+    {{ content }}
+    </body> &lt;/html&gt;</p>
+
+<p>Jekyll使用Liquid模板语言，<code>{{ page.title }}</code>表示文章标题，<code>{{ content }}</code>表示文章内容，更多模板变量请参考官方文档。</p>
+
+<p><strong>第四步，创建文章。</strong></p>
+
+<p>回到项目根目录</p>
+
+<pre><code>$ cd ../
+$ pwd
+~/blog_demo</code></pre>
+
+<p>创建一个_posts目录，用于存放blog文章。</p>
+
+<pre><code>$ mkdir _posts</code></pre>
+
+<p>进入该目录，创建第一篇文章。文章就是普通的文本文件，文件名假定为<code>2012-08-25-hello-world.html</code>。(注意，文件名必须为&#8221;年-月-日-文章标题.后缀名&#8221;的格式。如果网页代码采用html格式，后缀名为html；如果采用markdown格式，后缀名为md。） 在该文件中，填入以下内容：（注意，行首不能有空格）</p>
+
+<pre><code>---
+layout: default
+title: 你好，世界
+---
+&lt;h2&gt; {{ page.title }} &lt;/h2&gt;
+&lt;p&gt;我的第一篇文章&lt;/p&gt;
+&lt;p&gt; {{ page.date | date_to_string }} &lt;/p&gt;</code></pre>
+
+<p>每篇文章的头部，必须有一个yaml文件头，用来设置一些元数据。它用三根短划线&#8221;&#8212;&#8220;，标记开始和结束，里面每一行设置一种元数据。&#8221;layout:default&#8221;，表示该文章的模板使用_layouts目录下的default.html文件；&#8221;title: 你好，世界&#8221;，表示该文章的标题是&#8221;你好，世界&#8221;，如果不设置这个值，默认使用嵌入文件名的标题，即&#8221;hello world&#8221;。 在yaml文件头后面，就是文章的正式内容，里面可以使用模板变量。<code>{{ page.title }}</code>就是文件头中设置的&#8221;你好，世界&#8221;，<code>{{ page.date }}</code>则是嵌入文件名的日期（也可以在文件头重新定义date变量），&#8221;date_to_string&#8221;表示将page.date变量转化成人类可读的格式。</p>
+
+<p><strong>第五步，创建首页。</strong></p>
+
+<p>有了文章以后，还需要有一个首页。 回到根目录，创建一个index.html文件，填入以下内容。</p>
+
+<pre><code>---
+title: 我的Blog
+---
+&lt;h2&gt;{{ page.title }}&lt;/h2&gt;
+&lt;p&gt;最新文章&lt;/p&gt;
+&lt;ul&gt;
+ {% for post in site.posts %}
+&lt;li&gt;
+{{ post.date | date_to_string }} 
+&lt;a href=&quot;{{ site.baseurl }}{{ post.url }}&quot;&gt;{{ post.title }}&lt;/a&gt;
+&lt;/li&gt;
+{% endfor %}
+&lt;/ul&gt;</code></pre>
+
+<p>它的Yaml文件头表示，首页使用default模板，标题为&#8221;我的Blog&#8221;。然后，首页使用了<code>{% for post in site.posts %}</code>，表示对所有帖子进行一个遍历。这里要注意的是，Liquid模版 语言规定，输出内容使用两层大括号，单纯的命令使用一层大括号。至于<code>{{site.baseurl}}</code>就是_config.yml中设置的baseurl变量。</p>
+
+<p><strong>第六步，发布内容。</strong></p>
+
+<p>现在，这个简单的Blog就可以发布了。先把所有内容加入本地git库。</p>
+
+<pre><code>$ git add .
+$ git commit -m &quot;first post&quot;</code></pre>
+
+<p>然后，前往github的网站，在网站上创建一个格式为：username.github.io的库，必须有一个，然后再创建一个名为blog_demo的库。接着，再将本地内容推送到github上你刚创建的库。注意，下面命令中的username，要替换成你的username。</p>
+
+<pre><code>$ git remote add origin https://github.com/username/jekyll_demo.git
+$ git push origin gh-pages</code></pre>
+
+<p>上传成功之后，等10分钟左右，访问<code>http://username.github.io/blog_demo/</code>就可以看到Blog已经生成了（将username换成你的用户名）。</p>
